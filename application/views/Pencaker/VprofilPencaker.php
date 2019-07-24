@@ -63,9 +63,9 @@
           <!--  search form start -->
           <ul class="nav top-menu">
             <li>
-              <form class="navbar-form">
+              <!-- <form class="navbar-form">
                 <input class="form-control" placeholder="Search" type="text">
-              </form>
+              </form> -->
             </li>
           </ul>
           <!--  search form end -->
@@ -138,7 +138,7 @@
                   <a href="<?php echo base_url('Cpencaker/profilPencaker'); ?>"><i class="icon_profile"></i> My Profile</a>
                 </li>
                 <li>
-                  <a href="#"><i class="icon_mail_alt"></i> My Inbox</a>
+                  <a href="<?php echo base_url('Chome/riwayatPendidikanPencaker'); ?>"><i class="icon_mail_alt"></i> Riwayat Pendidikan</a>
                 </li>
                 <li>
                   <a href="#"><i class="icon_clock_alt"></i> Timeline</a>
@@ -265,7 +265,7 @@
                 <tbody>
                   <?php foreach ($pencaker as $k) { ?>
                   <p align = "center">
-                    <img  width="200" height="200"  src="<?php echo base_url('uploads/'.$k->foto) ?>"></img>
+                    <img  width="100" height="150"  src="<?php echo base_url('uploads/'.$k->foto) ?>"></img>
                   </p>
                   <tr>
                     <td>NIK</td>
@@ -289,7 +289,7 @@
                   </tr>
                   <tr>
                     <td>Pendidikan Terakhir</td>
-                    <td><?php echo $k->pendidikan; ?></td>
+                    <td><p><?php echo $k->pendidikan; echo$k->jurusan ;?></p></td>
                   </tr>
                   <tr>
                     <td>Status Pernikahan</td>
@@ -311,10 +311,84 @@
                     <td>No Telepon</td>
                     <td><p><?php echo $k->noTel; ?></p></td>
                   </tr>
+                  </tr>
               <?php } ?>
                 </tbody>
               </table>
-              <p align = "right"><a class="btn btn-primary" href="<?php echo base_url('Cpencaker/editProfil'); ?>" title="Bootstrap 3 themes generator">Edit Profil</a></p>
+            </div>
+            <div>
+              <header class="panel-heading">
+                Riwayat Pendidikan Anda
+              </header><br>
+              <table class="table table-striped">
+                <thead>
+                  <th>Tingkat</th>
+                  <th>Nama Sekolah</th>
+                  <th>Jurusan</th>
+                  <th>Alamat Sekolah</th>
+                  <th>Foto Ijazah</th>
+                </thead>
+                <tbody>
+                  <?php foreach ($pendidikan as $k) { ?>
+                    <tr>
+                      <td><p><?php echo $k->tingkat; ?></p></td>
+                      <td><p><?php echo $k->nama_sekolah; ?></p></td>
+                      <td><p><?php echo $k->jurusan; ?></p></td>
+                      <td><p><?php echo $k->alamat_sekolah; ?></p></td>
+                      <td>
+                        <img  width="200" height="200"  src="<?php echo base_url('uploads/'.$k->fotoIjazah) ?>"></img>
+                      </td>
+                    </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
+              <div>
+                <header class="panel-heading">
+                  Portofolio
+                </header><br>
+                <table class="table table-striped">
+                  <thead>
+                    <th>Nama Pekerjaan</th>
+                    <th>Lama Bekerja</th>
+                    <th>Nama Sertifikat</th>
+                    <th>Foto Sertifikat</th>
+                  </thead>
+                  <tbody>
+                    <?php foreach ($portofolio as $k) { ?>
+                      <tr>
+                        <td><p><?php echo $k->nama_pekerjaan; ?></p></td>
+                        <td><p><?php echo $k->lama_bekerja; ?></p></td>
+                        <td><p><?php echo $k->nama_sertifikat; ?></p></td>
+                        <td>
+                          <p>
+                            <img  width="200" height="200"  src="<?php echo base_url('uploads/'.$k->foto_sertifikat) ?>"></img>
+                          </p>
+                        </td>
+                      </tr>
+                    <?php } ?>
+                  </tbody>
+                </table>
+                <table class="table table-striped">
+                  <thead>
+                    <th>Nama Kemampuan</th>
+                    <th>Level</th>
+                  </thead>
+                  <tbody>
+                    <?php foreach ($kemampuan as $k) { ?>
+                      <tr>
+                        <td><p><?php echo $k->nama_kemampuan; ?></p></td>
+                        <td><p><?php echo $k->level; ?></p></td>
+                      </tr>
+                    <?php } ?>
+                  </tbody>
+                </table>
+              <p align = "right">
+                <a class="btn btn-primary" href="<?php echo base_url('Chome/editProfilPencaker'); ?>" title="Bootstrap 3 themes generator">Edit Profil</a>
+                <a class="btn btn-warning" href="<?php echo base_url('Chome/riwayatPendidikanPencaker'); ?>" title="Bootstrap 3 themes generator">Tambah Riwayat Pendidikan</a>
+                <a class="btn btn-success" href="<?php echo base_url('Cpencaker/cetak'); ?>" title="Bootstrap 3 themes generator">Cetak Kartu AK-1</a>
+                <a class="btn btn-primary" href="<?php echo base_url('Chome/portofolioPencaker'); ?>" title="Bootstrap 3 themes generator">Tambah Portofolio</a>
+                <a class="btn btn-warning" href="<?php echo base_url('Chome/kemampuanPencaker'); ?>" title="Bootstrap 3 themes generator">Tambah Kemampuan</a>
+              </p>
             </div>
           </div>
         <div class="text-right">

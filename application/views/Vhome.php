@@ -16,6 +16,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
   <!-- Bootstrap CSS -->
   <link href="<?php echo base_url();?>assets/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url().'assets/css/bootstrap.css'?>">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url().'assets/css/jquery.dataTables.css'?>">
   <!-- bootstrap theme -->
   <link href="<?php echo base_url();?>assets/css/bootstrap-theme.css" rel="stylesheet">
   <!--external css-->
@@ -63,8 +65,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!--  search form start -->
         <ul class="nav top-menu">
           <li>
-            <form class="navbar-form">
-              <input class="form-control" placeholder="Search" type="text">
+            <form class="navbar-form" action="<?php echo base_url('Chome/index'); ?>" method="get">
+              <input class="form-control" placeholder="Cari Lowongan Pekerjaan" type="search" name="query">
             </form>
           </li>
         </ul>
@@ -89,7 +91,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <!-- Button Login Stop -->
           <!-- Button Registrasion Start Here-->
           <td><a class="btn btn-success" href="<?php echo base_url('Cpencaker/daftar'); ?>" title="Bootstrap 3 themes generator">Registrasi Pencari Kerja</a></td>
-          <td><a class="btn btn-warning" href="#" title="Bootstrap 3 themes generator">Registrasi Perusahaan</a></td>
+          <td><a class="btn btn-warning" href="<?php echo base_url('Cperusahaan/registrasi') ?>" title="Bootstrap 3 themes generator">Registrasi Perusahaan</a></td>
           <!-- Button Registrasion Stop Here-->
         </ul>
         <!-- notificatoin dropdown end-->
@@ -108,70 +110,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                           <span>Dashboard</span>
                       </a>
           </li>
-          <li class="sub-menu">
-            <a href="javascript:;" class="">
-                          <i class="icon_document_alt"></i>
-                          <span>Forms</span>
-                          <span class="menu-arrow arrow_carrot-right"></span>
-                      </a>
-            <ul class="sub">
-              <li><a class="" href="form_component.html">Form Elements</a></li>
-              <li><a class="" href="form_validation.html">Form Validation</a></li>
-            </ul>
-          </li>
-          <li class="sub-menu">
-            <a href="javascript:;" class="">
-                          <i class="icon_desktop"></i>
-                          <span>UI Fitures</span>
-                          <span class="menu-arrow arrow_carrot-right"></span>
-                      </a>
-            <ul class="sub">
-              <li><a class="" href="general.html">Elements</a></li>
-              <li><a class="" href="buttons.html">Buttons</a></li>
-              <li><a class="" href="grids.html">Grids</a></li>
-            </ul>
-          </li>
-          <li>
-            <a class="" href="widgets.html">
-                          <i class="icon_genius"></i>
-                          <span>Widgets</span>
-                      </a>
-          </li>
-          <li>
-            <a class="" href="chart-chartjs.html">
-                          <i class="icon_piechart"></i>
-                          <span>Charts</span>
-
-                      </a>
-
-          </li>
-
-          <li class="sub-menu">
-            <a href="javascript:;" class="">
-                          <i class="icon_table"></i>
-                          <span>Tables</span>
-                          <span class="menu-arrow arrow_carrot-right"></span>
-                      </a>
-            <ul class="sub">
-              <li><a class="" href="basic_table.html">Basic Table</a></li>
-            </ul>
-          </li>
-
-          <li class="sub-menu">
-            <a href="javascript:;" class="">
-                          <i class="icon_documents_alt"></i>
-                          <span>Pages</span>
-                          <span class="menu-arrow arrow_carrot-right"></span>
-                      </a>
-            <ul class="sub">
-              <li><a class="" href="profile.html">Profile</a></li>
-              <li><a class="" href="login.html"><span>Login Page</span></a></li>
-              <li><a class="" href="contact.html"><span>Contact Page</span></a></li>
-              <li><a class="" href="blank.html">Blank Page</a></li>
-              <li><a class="" href="404.html">404 Error</a></li>
-            </ul>
-          </li>
-
+          
         </ul>
         <!-- sidebar menu end-->
       </div>
@@ -191,7 +130,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </ol>
           </div>
           <div>
-                 <table class="table">
+            <table class="table table-striped" id="mydata">
+              <thead>
+                <th>No Siup</th>
+                <th>Nama Lowongan</th>
+                <th>Tanggal Publis</th>
+                <th>Tanggal Penutupan</th>
+                <th>Status</th>
+              </thead>
+              <tbody id="show_data">
+                <tr>
+                  <?php foreach ($lowongan as $key) {?>
+                    <td><?php echo $key->no_siup;?></td>
+                    <td><?php echo $key->nama_lowongan;?></td>
+                    <td><?php echo $key->tanggal_pendaftaran;?></td>
+                    <td><?php echo $key->batas_waktu;?></td>
+                    <td><?php echo $key->status;?></td>
+                    <td><a class="btn btn-primary" href="#">Lihat Lowongan</a></td>
+                </tr>
+                <?php } ?>
+              </tbody>
+            </table>
+            <?php echo $pagination; ?>
+                 <!-- <table class="table">
                    <tbody>
                      <?php foreach ($data as $row): ?>
                     <h1><?= $row->nama_lowongan;?></h1>
@@ -205,7 +166,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <a href="<?= base_url();?>">http://localhost/disnaker/Cperusahaan/depan<?=$row->nama_lowongan;?> read more</a>
                   <?php endforeach;?>
                    </tbody>
-                 </table>
+                 </table> -->
 
               </div>
         </div>
@@ -266,8 +227,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <script src="<?php echo base_url();?>assets/js/sparklines.js"></script>
     <script src="<?php echo base_url();?>assets/js/charts.js"></script>
     <script src="<?php echo base_url();?>assets/js/jquery.slimscroll.min.js"></script>
-    <script>
-    </script>
+    <script type="text/javascript" src="<?php echo base_url().'assets/js/jquery.js'?>"></script>
+    <script type="text/javascript" src="<?php echo base_url().'assets/js/bootstrap.js'?>"></script>
+    <script type="text/javascript" src="<?php echo base_url().'assets/js/jquery.dataTables.js'?>"></script>
+
 
 </body>
 

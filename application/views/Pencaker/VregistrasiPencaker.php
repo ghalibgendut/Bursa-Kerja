@@ -278,14 +278,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                      <div class="col-sm-2">
                        <select class="form-control m-bot15" name="pendidikan_terakhir">
                                                <option value="SD">SD / Sederajat</option>
-                                               <option value="SMTP/Sederajat">SMTP / Sederajat</option>
-                                               <option value="SMTA/Sederajat">SMTA / D1 /AKTA.I</option>
-                                               <option value="SM/D2/D3">SM /D2 /D3</option>
-                                               <option value="AKTA II">AKTA II</option>
-                                               <option value="AKTA III">AKTA III</option>
-                                               <option value="S1/PASCA/AKTA.IV/SI/D4">S1 /PASCA /AKTA.IV /D4</option>
-                                               <option value="DOKTOR II/AKTA.V">DOKTOR II/ AKTA V</option>
+                                               <option value="SMP/Sederajat">SMP / Sederajat</option>
+                                               <option value="SMA/Sederajat">SMA / Sederajat</option>
+                                               <option value="D2/D3">D2 /D3</option>
+                                               <option value="S1/D4">S1/D4</option>
+                                               <option value="S2">S2</option>
+                                               <option value="S3">S3</option>
                         </select>
+                     </div>
+                   </div>
+                   <div class="form-group">
+                     <label class="col-sm-2 control-label">Jurusan</label>
+                     <div class="col-sm-10">
+                       <input type="text" class="form-control round-input" placeholder="Jurusan" name="jurusan">
                      </div>
                    </div>
                    <div class="form-group">

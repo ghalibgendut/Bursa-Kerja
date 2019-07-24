@@ -15,7 +15,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
    <title>Beranda Pencari Kerja</title>
 
    <!-- Bootstrap CSS -->
+   <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/bootstrap.css">
    <link href="<?php echo base_url();?>assets/css/bootstrap.min.css" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/jquery.dataTables.css">
    <!-- bootstrap theme -->
    <link href="<?php echo base_url();?>assets/css/bootstrap-theme.css" rel="stylesheet">
    <!--external css-->
@@ -37,6 +39,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
    <link href="<?php echo base_url();?>assets/css/style-responsive.css" rel="stylesheet" />
    <link href="<?php echo base_url();?>assets/css/xcharts.min.css" rel=" stylesheet">
    <link href="<?php echo base_url();?>assets/css/jquery-ui-1.10.4.min.css" rel="stylesheet">
+   <script>
+    var baseurl = "<?php echo base_url("Cpencaker/index"); ?>"; // Buat variabel baseurl untuk nanti di akses pada file config.js
+    </script>
+    <script src="<?php echo base_url("js/jquery.min.js"); ?>"></script> <!-- Load library jquery -->
+    <script src="<?php echo base_url("js/config.js"); ?>"></script> <!-- Load file process.js -->
    <!-- =======================================================
      Theme Name: NiceAdmin
      Theme URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
@@ -63,8 +70,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
          <!--  search form start -->
          <ul class="nav top-menu">
            <li>
-             <form class="navbar-form">
-               <input class="form-control" placeholder="Search" type="text">
+             <form class="navbar-form" action="<?php echo base_url('Cpencaker/index'); ?>" method="get">
+               <input class="form-control" placeholder="Cari Lowongan Pekerjaan" type="search" name="query">
              </form>
            </li>
          </ul>
@@ -175,70 +182,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                            <span>Dashboard</span>
                        </a>
            </li>
-           <li class="sub-menu">
-             <a href="javascript:;" class="">
-                           <i class="icon_document_alt"></i>
-                           <span>Forms</span>
-                           <span class="menu-arrow arrow_carrot-right"></span>
-                       </a>
-             <ul class="sub">
-               <li><a class="" href="form_component.html">Form Elements</a></li>
-               <li><a class="" href="form_validation.html">Form Validation</a></li>
-             </ul>
-           </li>
-           <li class="sub-menu">
-             <a href="javascript:;" class="">
-                           <i class="icon_desktop"></i>
-                           <span>UI Fitures</span>
-                           <span class="menu-arrow arrow_carrot-right"></span>
-                       </a>
-             <ul class="sub">
-               <li><a class="" href="general.html">Elements</a></li>
-               <li><a class="" href="buttons.html">Buttons</a></li>
-               <li><a class="" href="grids.html">Grids</a></li>
-             </ul>
-           </li>
-           <li>
-             <a class="" href="widgets.html">
-                           <i class="icon_genius"></i>
-                           <span>Widgets</span>
-                       </a>
-           </li>
-           <li>
-             <a class="" href="chart-chartjs.html">
-                           <i class="icon_piechart"></i>
-                           <span>Charts</span>
-
-                       </a>
-
-           </li>
-
-           <li class="sub-menu">
-             <a href="javascript:;" class="">
-                           <i class="icon_table"></i>
-                           <span>Tables</span>
-                           <span class="menu-arrow arrow_carrot-right"></span>
-                       </a>
-             <ul class="sub">
-               <li><a class="" href="basic_table.html">Basic Table</a></li>
-             </ul>
-           </li>
-
-           <li class="sub-menu">
-             <a href="javascript:;" class="">
-                           <i class="icon_documents_alt"></i>
-                           <span>Pages</span>
-                           <span class="menu-arrow arrow_carrot-right"></span>
-                       </a>
-             <ul class="sub">
-               <li><a class="" href="profile.html">Profile</a></li>
-               <li><a class="" href="login.html"><span>Login Page</span></a></li>
-               <li><a class="" href="contact.html"><span>Contact Page</span></a></li>
-               <li><a class="" href="blank.html">Blank Page</a></li>
-               <li><a class="" href="404.html">404 Error</a></li>
-             </ul>
-           </li>
-
          </ul>
          <!-- sidebar menu end-->
        </div>
@@ -258,7 +201,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
              </ol>
            </div>
            <div>
-                  <table class="table">
+              <table class="table table-striped" id="mydata">
+                <thead>
+                  <th>No Siup</th>
+                  <th>Nama Lowongan</th>
+                  <th>Tanggal Publis</th>
+                  <th>Tanggal Penutupan</th>
+                  <th>Status</th>
+                 </thead>
+                 <tbody id="show_data">
+                   <tr>
+                     <?php foreach ($lowongan as $key) {?>
+                       <td><?php echo $key->no_siup;?></td>
+                       <td><?php echo $key->nama_lowongan;?></td>
+                       <td><?php echo $key->tanggal_pendaftaran;?></td>
+                       <td><?php echo $key->batas_waktu;?></td>
+                       <td><?php echo $key->status;?></td>
+                       <td><a class="btn btn-success" href="<?php echo base_url ('Chome/melamar/'.$key->id_lowongan); ?>">Lamar Lowongan</a></td>
+                   </tr>
+                   <?php } ?>
+                  </tbody>
+                 </table>
+                 <?php echo $pagination; ?>
+                  <!-- <table class="table">
                     <tbody>
                       <?php foreach ($data as $row): ?>
                      <h1><?= $row->nama_lowongan;?></h1>
@@ -272,7 +237,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                      <a href="<?= base_url();?>">http://localhost/disnaker/Cperusahaan/depan<?=$row->nama_lowongan;?> read more</a>
                    <?php endforeach;?>
                     </tbody>
-                  </table>
+                  </table> -->
 
                </div>
            <!-- <div>
@@ -327,6 +292,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
    <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery-ui-1.9.2.custom.min.js"></script>
    <!-- bootstrap -->
    <script src="<?php echo base_url();?>assets/js/bootstrap.min.js"></script>
+   <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap.js"></script>
    <!-- nice scroll -->
    <script src="<?php echo base_url();?>assets/js/jquery.scrollTo.min.js"></script>
    <script src="<?php echo base_url();?>assets/js/jquery.nicescroll.js" type="text/javascript"></script>
@@ -336,7 +302,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
    <script src="<?php echo base_url();?>assets/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js"></script>
    <script src="<?php echo base_url();?>assets/js/owl.carousel.js"></script>
    <!-- jQuery full calendar -->
-   <<script src="<?php echo base_url();?>assets/js/fullcalendar.min.js"></script>
+   <script src="<?php echo base_url();?>assets/js/fullcalendar.min.js"></script>
      <!-- Full Google Calendar - Calendar -->
      <script src="<?php echo base_url();?>assets/fullcalendar/fullcalendar/fullcalendar.js"></script>
      <!--script for this page only-->
@@ -361,9 +327,48 @@ defined('BASEPATH') OR exit('No direct script access allowed');
      <script src="<?php echo base_url();?>assets/js/sparklines.js"></script>
      <script src="<?php echo base_url();?>assets/js/charts.js"></script>
      <script src="<?php echo base_url();?>assets/js/jquery.slimscroll.min.js"></script>
+     <script type="text/javascript" src="<?php echo base_url().'assets/js/jquery.dataTables.js'?>"></script>
+     <script src="<?php echo base_url("js/jquery-1.8.3.min.js"); ?>"></script> <!-- Load library jquery -->
+     <script src="<?php echo base_url("js/config.js"); ?>"></script> <!-- Load file process.js -->
      <script>
+     $(document).ready(function(){
+             tampil_data_lowongan();   //pemanggilan fungsi tampil lowongan.
+
+             $('#mydata').dataTable();
+
+             //fungsi tampil barang
+             function tampil_data_lowongan(){
+                 $.ajax({
+                     type  : 'ajax',
+                     url   : '<?php echo base_url()?>Cpencaker/index',
+                     async : false,
+                     dataType : 'json',
+                     success : function(data){
+                         var html = '';
+                         var i;
+                         for(i=0; i<data.length; i++){
+                             html += '<tr>'+
+                                     '<td>'+data[i].no_siup+'</td>'+
+                                     '<td>'+data[i].nama_lowongan+'</td>'+
+                                     '<td>'+data[i].nama_perusahaan+'</td>'+
+                                     '<td>'+data[i].jabatan+'</td>'+
+                                     '<td>'+data[i].gaji+'</td>'+
+                                     // '<td style="text-align:right;">'+
+                                     //     '<a href="javascript:;" class="btn btn-success" data="'+data[i].no_siup+'">Edit</a>'+' '+
+                                     //     '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus" data="'+data[i].barang_kode+'">Hapus</a>'+
+                                     // '</td>'+
+                                     '</tr>';
+                         }
+                         $('#show_data').html(html);
+                     }
+
+                 });
+             }
+           });
      </script>
 
  </body>
 
  </html>
+ <script>
+</script>

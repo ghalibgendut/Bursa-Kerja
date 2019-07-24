@@ -63,9 +63,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
          <!--  search form start -->
          <ul class="nav top-menu">
            <li>
-             <form class="navbar-form">
+             <!-- <form class="navbar-form">
                <input class="form-control" placeholder="Search" type="text">
-             </form>
+             </form> -->
            </li>
          </ul>
          <!--  search form end -->
@@ -138,7 +138,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                  <a href="<?php echo base_url('Cpencaker/profilPencaker'); ?>"><i class="icon_profile"></i> My Profile</a>
                </li>
                <li>
-                 <a href="#"><i class="icon_mail_alt"></i> My Inbox</a>
+                 <a href="<?php echo base_url('Chome/riwayatPendidikanPencaker'); ?>"><i class="icon_mail_alt"></i> Riwayat Pendidikan</a>
                </li>
                <li>
                  <a href="#"><i class="icon_clock_alt"></i> Timeline</a>
@@ -265,30 +265,38 @@ defined('BASEPATH') OR exit('No direct script access allowed');
              if (validation_errors()) {
                echo validation_errors();
              }
+             echo $this->session->flashdata('msg');
               ?>
              <form class="form-horizontal" action="<?php echo base_url('Cpencaker/editProfil'); ?>" method="post" enctype="multipart/form-data">
+               <?php foreach ($pencaker as $k) { ?>
+                 <div class="form-group">
+                   <label class="col-sm-2 control-label">NIK</label>
+                   <div class="col-sm-10">
+                     <input type="text" class="form-control round-input" name="nik" value="<?php echo $k->nik; ?>" disabled>
+                   </div>
+                 </div>
                <div class="form-group">
                  <label class="col-sm-2 control-label">Nama Lengkap</label>
                  <div class="col-sm-10">
-                   <input type="text" class="form-control round-input" placeholder="Nama Lengkap" name="nama">
+                   <input type="text" class="form-control round-input" placeholder="Nama Lengkap" name="nama" value="<?php echo $k->namaLengkap; ?>">
                  </div>
                </div>
                <div class="form-group">
                  <label class="col-sm-2 control-label">Alamat</label>
                  <div class="col-sm-10">
-                   <input type="text" class="form-control round-input" placeholder="Alamat" name="alamat">
+                   <input type="text" class="form-control round-input" placeholder="Alamat" name="alamat" value="<?php echo $k->alamat; ?>">
                  </div>
                </div>
                <div class="form-group">
                  <label class="col-sm-2 control-label">No Telepon</label>
                  <div class="col-sm-10">
-                   <input type="text" class="form-control round-input" placeholder="No Telepon" name="noTel">
+                   <input type="text" class="form-control round-input" placeholder="No Telepon" name="noTel" value="<?php echo $k->noTel; ?>">
                  </div>
                </div>
                <div class="form-group">
                  <label class="col-sm-2 control-label">Email</label>
                  <div class="col-sm-10">
-                   <input type="text" class="form-control round-input" placeholder="Email" name="email">
+                   <input type="text" class="form-control round-input" placeholder="Email" name="email" value="<?php echo $k->email; ?>">
                  </div>
                </div>
                <div class="form-group">
@@ -302,6 +310,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </select>
                  </div>
                </div>
+               <div class="form-group">
+                 <label class="col-sm-2 control-label">Pendidikan Terakhir</label>
+                 <div class="col-sm-2">
+                   <select class="form-control m-bot15" name="pendidikan_terakhir">
+                                           <option value="SD">SD / Sederajat</option>
+                                           <option value="SMP/Sederajat">SMP / Sederajat</option>
+                                           <option value="SMA/Sederajat">SMA / Sederajat</option>
+                                           <option value="D2/D3">D2 /D3</option>
+                                           <option value="S1/D4">S1/D4</option>
+                                           <option value="S2">S2</option>
+                                           <option value="S3">S3</option>
+                    </select>
+                 </div>
+               </div>
+               <div class="form-group">
+                 <label class="col-sm-2 control-label">Jurusan</label>
+                 <div class="col-sm-10">
+                   <input type="text" class="form-control round-input" placeholder="Jurusan" name="jurusan" value="<?php echo $k->jurusan; ?>">
+                 </div>
+               </div>
+               <?php } ?>
                <div class="form-group">
                  <label class="col-sm-2 control-label">Foto</label>
                  <div class="col-sm-10">

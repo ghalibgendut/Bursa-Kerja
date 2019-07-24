@@ -62,7 +62,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <span class="pull-right"> <a href="#"> Forgot Password?</a></span>
             </label> -->
         <input class="btn btn-primary btn-lg btn-block" type="submit" name="masuk" value="Login"></input>
-        <button class="btn btn-info btn-lg btn-block" type="submit">Signup</button>
       </div>
     </form>
     <div class="text-right">
