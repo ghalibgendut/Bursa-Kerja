@@ -11,8 +11,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
    <meta name="author" content="GeeksLabs">
    <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
    <link rel="shortcut icon" href="img/favicon.png">
+   <link rel="icon" type="image/png" href="<?php echo base_url('uploads/logo.png'); ?>">
 
-   <title>Beranda Pencari Kerja</title>
+   <title>
+     Bursa Kerja Online Kab.Bandung
+   </title>
 
    <!-- Bootstrap CSS -->
    <link href="<?php echo base_url();?>assets/css/bootstrap.min.css" rel="stylesheet">
@@ -56,7 +59,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
        </div>
 
        <!--logo start-->
-       <a href="<?php echo base_url('Cpencaker/index'); ?>" class="logo">Kabupaten <span class="lite">Bandung</span></a>
+       <a href="<?php echo base_url('Cpencaker/index'); ?>"  class="logo">Kabupaten <span class="lite">Bandung</span>
+         <img align="left" width="30" height="30" src="<?php echo base_url('uploads/logo.png'); ?>" alt=""></img>
+       </a>
        <!--logo end-->
 
        <div class="nav search-row" id="top_menu">
@@ -82,44 +87,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
              <a data-toggle="dropdown" class="dropdown-toggle" href="#">
 
                              <i class="icon-bell-l"></i>
-                             <span class="badge bg-important">7</span>
+                             <span class="badge bg-important"><?php echo $jumlah; ?></span>
                          </a>
              <ul class="dropdown-menu extended notification">
                <div class="notify-arrow notify-arrow-blue"></div>
                <li>
-                 <p class="blue">You have 4 new notifications</p>
+                 <p  class="blue">You have <?php echo $jumlah; ?> new notifications</p>
                </li>
-               <li>
-                 <a href="#">
-                                     <span class="label label-primary"><i class="icon_profile"></i></span>
-                                     Friend Request
-                                     <span class="small italic pull-right">5 mins</span>
-                                 </a>
-               </li>
-               <li>
-                 <a href="#">
-                                     <span class="label label-warning"><i class="icon_pin"></i></span>
-                                     John location.
-                                     <span class="small italic pull-right">50 mins</span>
-                                 </a>
-               </li>
-               <li>
-                 <a href="#">
-                                     <span class="label label-danger"><i class="icon_book_alt"></i></span>
-                                     Project 3 Completed.
-                                     <span class="small italic pull-right">1 hr</span>
-                                 </a>
-               </li>
-               <li>
-                 <a href="#">
-                                     <span class="label label-success"><i class="icon_like"></i></span>
-                                     Mick appreciated your work.
-                                     <span class="small italic pull-right"> Today</span>
-                                 </a>
-               </li>
-               <li>
-                 <a href="#">See all notifications</a>
-               </li>
+               <?php
+                foreach ($notif as $k) {
+                  ?>
+
+                 <li>
+                   <a href="<?php echo base_url('Cpencaker/get_nik/'.$k->id_lowongan); ?>">
+                                       <span class="label label-danger"><i class="icon_book_alt"></i></span>
+                                       <?php echo $k->nama_lowongan; ?>
+                                       <?php echo $k->nama_perusahaan; ?>
+                                       <span class="small italic pull-right"><?php echo $k->status_lamaran; ?></span>
+                                   </a>
+                 </li>
+             <?php } ?>
              </ul>
            </li>
            <!-- alert notification end-->
@@ -138,22 +125,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                  <a href="<?php echo base_url('Cpencaker/profilPencaker'); ?>"><i class="icon_profile"></i> My Profile</a>
                </li>
                <li>
-                 <a href="<?php echo base_url('Chome/riwayatPendidikanPencaker'); ?>"><i class="icon_mail_alt"></i> Riwayat Pendidikan</a>
-               </li>
-               <li>
-                 <a href="#"><i class="icon_clock_alt"></i> Timeline</a>
-               </li>
-               <li>
-                 <a href="#"><i class="icon_chat_alt"></i> Chats</a>
-               </li>
-               <li>
                  <a href="<?php echo base_url('Chome/logout'); ?>"><i class="icon_key_alt"></i> Log Out</a>
-               </li>
-               <li>
-                 <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>
-               </li>
-               <li>
-                 <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>
                </li>
              </ul>
            </li>
@@ -175,70 +147,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                            <span>Dashboard</span>
                        </a>
            </li>
-           <li class="sub-menu">
-             <a href="javascript:;" class="">
-                           <i class="icon_document_alt"></i>
-                           <span>Forms</span>
-                           <span class="menu-arrow arrow_carrot-right"></span>
-                       </a>
-             <ul class="sub">
-               <li><a class="" href="form_component.html">Form Elements</a></li>
-               <li><a class="" href="form_validation.html">Form Validation</a></li>
-             </ul>
-           </li>
-           <li class="sub-menu">
-             <a href="javascript:;" class="">
-                           <i class="icon_desktop"></i>
-                           <span>UI Fitures</span>
-                           <span class="menu-arrow arrow_carrot-right"></span>
-                       </a>
-             <ul class="sub">
-               <li><a class="" href="general.html">Elements</a></li>
-               <li><a class="" href="buttons.html">Buttons</a></li>
-               <li><a class="" href="grids.html">Grids</a></li>
-             </ul>
-           </li>
-           <li>
-             <a class="" href="widgets.html">
-                           <i class="icon_genius"></i>
-                           <span>Widgets</span>
+           <li class="active">
+             <a class="" href="<?php echo base_url('Cpencaker/listLamaran'); ?>">
+                           <i class="far fa-file-alt"></i>
+                           <span>List Lamaran Anda</span>
                        </a>
            </li>
-           <li>
-             <a class="" href="chart-chartjs.html">
-                           <i class="icon_piechart"></i>
-                           <span>Charts</span>
-
-                       </a>
-
-           </li>
-
-           <li class="sub-menu">
-             <a href="javascript:;" class="">
-                           <i class="icon_table"></i>
-                           <span>Tables</span>
-                           <span class="menu-arrow arrow_carrot-right"></span>
-                       </a>
-             <ul class="sub">
-               <li><a class="" href="basic_table.html">Basic Table</a></li>
-             </ul>
-           </li>
-
-           <li class="sub-menu">
-             <a href="javascript:;" class="">
-                           <i class="icon_documents_alt"></i>
-                           <span>Pages</span>
-                           <span class="menu-arrow arrow_carrot-right"></span>
-                       </a>
-             <ul class="sub">
-               <li><a class="" href="profile.html">Profile</a></li>
-               <li><a class="" href="login.html"><span>Login Page</span></a></li>
-               <li><a class="" href="contact.html"><span>Contact Page</span></a></li>
-               <li><a class="" href="blank.html">Blank Page</a></li>
-               <li><a class="" href="404.html">404 Error</a></li>
-             </ul>
-           </li>
-
          </ul>
          <!-- sidebar menu end-->
        </div>
@@ -272,62 +186,62 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                  <div class="form-group">
                    <label class="col-sm-2 control-label">NIK</label>
                    <div class="col-sm-10">
-                     <input type="text" class="form-control round-input" name="nik" value="<?php echo $k->nik; ?>" disabled>
+                     <input type="text" class="form-control round-input" name="nik" value="<?php echo $k->nik; ?>" readonly>
                    </div>
                  </div>
                <div class="form-group">
                  <label class="col-sm-2 control-label">Nama Lengkap</label>
                  <div class="col-sm-10">
-                   <input type="text" class="form-control round-input" placeholder="Nama Lengkap" name="nama" value="<?php echo $k->namaLengkap; ?>">
+                   <input type="text" class="form-control round-input" placeholder="Nama Lengkap" name="nama" value="<?php echo $k->namaLengkap; ?>" required>
                  </div>
                </div>
                <div class="form-group">
                  <label class="col-sm-2 control-label">Alamat</label>
                  <div class="col-sm-10">
-                   <input type="text" class="form-control round-input" placeholder="Alamat" name="alamat" value="<?php echo $k->alamat; ?>">
+                   <input type="text" class="form-control round-input" placeholder="Alamat" name="alamat" value="<?php echo $k->alamat; ?>" required>
+                 </div>
+               </div>
+               <div class="form-group">
+                 <label class="col-sm-2 control-label">Kecamatan</label>
+                 <div class="col-sm-2">
+                   <select class="form-control m-bot15" name="kecamatan" id="kecamatan" required>
+                     <option value=""disabled diselected>--Pilih Kecamatan--</option>
+                     <?php foreach ($listKecamatan as $key) { ?>
+                            <option value="<?php echo"$key->id_kecamatan"; ?>"><?php echo "$key->nama_kecamatan" ; ?></option>
+                     <?php } ?>
+                    </select>
+                 </div>
+               </div>
+               <div class="form-group">
+                 <label class="col-sm-2 control-label">Kelurahan</label>
+                 <div class="col-sm-2">
+                   <select class="form-control m-bot15" name="kelurahan" id="kelurahan" required>
+                     <option value=""disabled diselected>--Pilih Kelurahan--</option>
+
+                   </select>
                  </div>
                </div>
                <div class="form-group">
                  <label class="col-sm-2 control-label">No Telepon</label>
                  <div class="col-sm-10">
-                   <input type="text" class="form-control round-input" placeholder="No Telepon" name="noTel" value="<?php echo $k->noTel; ?>">
+                   <input type="text" class="form-control round-input" placeholder="No Telepon" name="noTel" value="<?php echo $k->noTel; ?>" required>
                  </div>
                </div>
                <div class="form-group">
                  <label class="col-sm-2 control-label">Email</label>
                  <div class="col-sm-10">
-                   <input type="text" class="form-control round-input" placeholder="Email" name="email" value="<?php echo $k->email; ?>">
+                   <input type="text" class="form-control round-input" placeholder="Email" name="email" value="<?php echo $k->email; ?>" required>
                  </div>
                </div>
                <div class="form-group">
                  <label class="col-sm-2 control-label">Status Pernikahan</label>
                  <div class="col-sm-2">
-                   <select class="form-control m-bot15" name="statusP">
+                   <select class="form-control m-bot15" name="statusP" required>
                                            <option value="Kawin">Kawin</option>
                                            <option value="Lajang">Lajang</option>
                                            <option value="Janda">Janda</option>
                                            <option value="Duda">Duda</option>
                     </select>
-                 </div>
-               </div>
-               <div class="form-group">
-                 <label class="col-sm-2 control-label">Pendidikan Terakhir</label>
-                 <div class="col-sm-2">
-                   <select class="form-control m-bot15" name="pendidikan_terakhir">
-                                           <option value="SD">SD / Sederajat</option>
-                                           <option value="SMP/Sederajat">SMP / Sederajat</option>
-                                           <option value="SMA/Sederajat">SMA / Sederajat</option>
-                                           <option value="D2/D3">D2 /D3</option>
-                                           <option value="S1/D4">S1/D4</option>
-                                           <option value="S2">S2</option>
-                                           <option value="S3">S3</option>
-                    </select>
-                 </div>
-               </div>
-               <div class="form-group">
-                 <label class="col-sm-2 control-label">Jurusan</label>
-                 <div class="col-sm-10">
-                   <input type="text" class="form-control round-input" placeholder="Jurusan" name="jurusan" value="<?php echo $k->jurusan; ?>">
                  </div>
                </div>
                <?php } ?>
@@ -337,7 +251,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                    <input type="file" placeholder="Foto" name="foto">
                  </div>
                </div>
-               <input class="btn btn-primary btn-lg btn-block" type="submit" name="edit" value="Edit Profil"></input>
+               <p align="right">
+                 <input class="btn btn-primary" type="submit" name="edit" value="Simpan"></input>
+                 <input class="btn btn-danger" type="reset" name="Reset" value="Reset"></input>
+               </p>
              </form>
            </div>
          </div>
@@ -359,48 +276,61 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
    <!-- javascripts -->
    <script src="<?php echo base_url();?>assets/js/jquery.js"></script>
-   <script src="<?php echo base_url();?>assets/js/jquery-ui-1.10.4.min.js"></script>
-   <script src="<?php echo base_url();?>assets/js/jquery-1.8.3.min.js"></script>
-   <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery-ui-1.9.2.custom.min.js"></script>
-   <!-- bootstrap -->
    <script src="<?php echo base_url();?>assets/js/bootstrap.min.js"></script>
    <!-- nice scroll -->
    <script src="<?php echo base_url();?>assets/js/jquery.scrollTo.min.js"></script>
    <script src="<?php echo base_url();?>assets/js/jquery.nicescroll.js" type="text/javascript"></script>
-   <!-- charts scripts -->
-   <script src="<?php echo base_url();?>assets/jquery-knob/js/jquery.knob.js"></script>
-   <script src="<?php echo base_url();?>assets/js/jquery.sparkline.js" type="text/javascript"></script>
-   <script src="<?php echo base_url();?>assets/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js"></script>
-   <script src="<?php echo base_url();?>assets/js/owl.carousel.js"></script>
-   <!-- jQuery full calendar -->
-   <<script src="<?php echo base_url();?>assets/js/fullcalendar.min.js"></script>
-     <!-- Full Google Calendar - Calendar -->
-     <script src="<?php echo base_url();?>assets/fullcalendar/fullcalendar/fullcalendar.js"></script>
-     <!--script for this page only-->
-     <script src="<?php echo base_url();?>assets/js/calendar-custom.js"></script>
-     <script src="<?php echo base_url();?>assets/js/jquery.rateit.min.js"></script>
-     <!-- custom select -->
-     <script src="<?php echo base_url();?>assets/js/jquery.customSelect.min.js"></script>
-     <script src="<?php echo base_url();?>assets/chart-master/Chart.js"></script>
 
-     <!--custome script for all page-->
-     <script src="<?php echo base_url();?>assets/js/scripts.js"></script>
-     <!-- custom script for this page-->
-     <script src="<?php echo base_url();?>assets/js/sparkline-chart.js"></script>
-     <script src="<?php echo base_url();?>assets/js/easy-pie-chart.js"></script>
-     <script src="<?php echo base_url();?>assets/js/jquery-jvectormap-1.2.2.min.js"></script>
-     <script src="<?php echo base_url();?>assets/js/jquery-jvectormap-world-mill-en.js"></script>
-     <script src="<?php echo base_url();?>assets/js/xcharts.min.js"></script>
-     <script src="<?php echo base_url();?>assets/js/jquery.autosize.min.js"></script>
-     <script src="<?php echo base_url();?>assets/js/jquery.placeholder.min.js"></script>
-     <script src="<?php echo base_url();?>assets/js/gdp-data.js"></script>
-     <script src="<?php echo base_url();?>assets/js/morris.min.js"></script>
-     <script src="<?php echo base_url();?>assets/js/sparklines.js"></script>
-     <script src="<?php echo base_url();?>assets/js/charts.js"></script>
-     <script src="<?php echo base_url();?>assets/js/jquery.slimscroll.min.js"></script>
-     <script>
-     </script>
+   <!-- jquery ui -->
+   <script src="<?php echo base_url();?>assets/js/jquery-ui-1.9.2.custom.min.js"></script>
 
+   <!--custom checkbox & radio-->
+   <script type="text/javascript" src="<?php echo base_url();?>assets/js/ga.js"></script>
+   <!--custom switch-->
+   <script src="<?php echo base_url();?>assets/js/bootstrap-switch.js"></script>
+   <!--custom tagsinput-->
+   <script src="<?php echo base_url();?>assets/js/jquery.tagsinput.js"></script>
+
+   <!-- colorpicker -->
+
+   <!-- bootstrap-wysiwyg -->
+   <script src="<?php echo base_url();?>assets/js/jquery.hotkeys.js"></script>
+   <script src="<?php echo base_url();?>assets/js/bootstrap-wysiwyg.js"></script>
+   <script src="<?php echo base_url();?>assets/js/bootstrap-wysiwyg-custom.js"></script>
+   <script src="<?php echo base_url();?>assets/js/moment.js"></script>
+   <script src="<?php echo base_url();?>assets/js/bootstrap-colorpicker.js"></script>
+   <script src="<?php echo base_url();?>assets/js/daterangepicker.js"></script>
+   <script src="<?php echo base_url();?>assets/js/bootstrap-datepicker.js"></script>
+   <!-- ck editor -->
+   <script type="text/javascript" src="<?php echo base_url();?>assets//ckeditor/ckeditor.js"></script>
+   <!-- custom form component script for this page-->
+   <script src="<?php echo base_url();?>assets/js/form-component.js"></script>
+   <!-- custome script for all page -->
+   <script src="<?php echo base_url();?>assets/js/scripts.js"></script>
+     <script type="text/javascript">
+    	$(document).ready(function(){
+    		$('#kecamatan').change(function(){
+    			var id=$(this).val();
+          console.log(id)
+    			$.ajax({
+    				url : "<?php echo base_url('Chome/get_kelurahan');?>",
+    				method : "POST",
+    				data : {id: id},
+    				async : false,
+    		    dataType : "JSON",
+    				success: function(data){
+    					var html = '';
+    		            var i;
+    		            for(i=0; i<data.length; i++){
+    		                html += '<option value = "'+data[i].id_kelurahan+'">'+data[i].nama_kelurahan+'</option>';
+    		            }
+    		            $('#kelurahan').html(html);
+
+    				}
+    			});
+    		});
+    	});
+    </script>
  </body>
 
  </html>

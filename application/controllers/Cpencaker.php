@@ -21,76 +21,59 @@ class Cpencaker extends CI_Controller
   }
   public function index()
   {
-    $nama_lowongan=$this->input->get('query');
-    $data['lowongan']=$this->Mhome->search($nama_lowongan);
-    $table['lowongan']=$this->Mhome->lihat_lowongan('lowongan')->result();
-    //paginasi
-    $config['base_url'] = site_url('Chome/index'); //site url
-    $config['total_rows'] = $this->db->count_all('lowongan'); //total row
-    $config['per_page'] = 5;  //show record per halaman
-    $config["uri_segment"] = 3;  // uri parameter
-    $choice = $config["total_rows"] / $config["per_page"];
-    $config["num_links"] = floor($choice);
-    $config['first_link']       = 'First';
-    $config['last_link']        = 'Last';
-    $config['next_link']        = 'Next';
-    $config['prev_link']        = 'Prev';
-    $config['full_tag_open']    = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
-    $config['full_tag_close']   = '</ul></nav></div>';
-    $config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
-    $config['num_tag_close']    = '</span></li>';
-    $config['cur_tag_open']     = '<li class="page-item active"><span class="page-link">';
-    $config['cur_tag_close']    = '<span class="sr-only">(current)</span></span></li>';
-    $config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
-    $config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
-    $config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
-    $config['prev_tagl_close']  = '</span>Next</li>';
-    $config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
-    $config['first_tagl_close'] = '</span></li>';
-    $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
-    $config['last_tagl_close']  = '</span></li>';
-    $this->pagination->initialize($config);
-    $data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-    $data['data'] = $this->Mhome->pagination_lowongan($config["per_page"], $data['page']);
-    $data['pagination'] = $this->pagination->create_links();
-    //paginasi
-    $this->load->view('Pencaker/VhomePencaker',$data,$table);
-  }
-  public function daftar()
-  {
-    $this->load->view('Pencaker/VregistrasiPencaker');
+    $data['lowong']=$this->Mhome->lowong()->result();
+    $data['jumlah']= $this->notif()->num_rows();
+    $data['notif'] = $this->notif()->result();
+    $this->load->view('Pencaker/VhomePencaker',$data);
   }
   //Registrasi start
+  public function daftar()
+  {
+    $data['listPendidikan'] = $this->Mhome->list_pendidikan()->result();
+    $data['listKecamatan'] = $this->Mhome->list_kecamatan()->result();
+    $this->load->view('Pencaker/VregistrasiPencaker',$data);
+  }
+  public function get_kelurahan()
+  {
+    $id = $this->input->post('id');
+    $data = $this->Mhome->list_kelurahan($id)->result();
+    echo json_encode($data);
+  }
+
   public function registrasi()
   {
+    $data['listPendidikan'] = $this->Mhome->list_pendidikan()->result();
+    $data['listKecamatan'] = $this->Mhome->list_kecamatan()->result();
     if ($this->input->post('daftar')) {
       $this->form_validation->set_rules(
   			'uname','Username',
-  			'required|min_length[5]|max_length[12]',
+  			'required|min_length[5]|max_length[12]|alpha_dash',
   			array(
   					'required' => 'you have not provided %s.',
   					'is_unique' => 'This is already exists.')
   		);
       $this->form_validation->set_rules('pass','Password','trim|required|min_length[8]');
       $this->form_validation->set_rules('email','E-mail','required');
-      $this->form_validation->set_rules('noTel', 'No Telepon', 'trim|required');
+      $this->form_validation->set_rules('noTel', 'No Telepon', 'trim|required|numeric');
       $this->form_validation->set_rules(
   			'nik','NIK',
-  			'required|min_length[5]|max_length[16]',
+  			'required|min_length[16]|max_length[16]|numeric',
   			array(
   					'required' => 'you have not provided %s.',
+            'numeric' => '%s must number only.',
   					'is_unique' => 'This is already exists.')
   		);
       $this->form_validation->set_rules('nama','Nama Lengkap','required');
-      $this->form_validation->set_rules('lahir','Tempat Lahir','required');
+      $this->form_validation->set_rules('lahir','Tempat Lahir','required|alpha');
       $this->form_validation->set_rules('tglLahir','Tanggal Lahir','required');
       $this->form_validation->set_rules('jenisK','Jenis Kelamin','required');
       $this->form_validation->set_rules('statusP','Status Pernikahan','required');
       $this->form_validation->set_rules('agama','Agama','required');
       $this->form_validation->set_rules('alamat','Alamat','required');
+      $this->form_validation->set_rules('kelurahan','Kelurahan','required');
       $this->form_validation->set_rules('pendidikan_terakhir','Pendidikan Terakhir','required');
       if ($this->form_validation->run() == FALSE) {
-        $this->load->view('Pencaker/VregistrasiPencaker');
+        $this->load->view('Pencaker/VregistrasiPencaker',$data);
       }
       $username = $this->input->post('uname');
       $password = $this->input->post('pass');
@@ -104,8 +87,11 @@ class Cpencaker extends CI_Controller
       $statusPernikahan = $this->input->post('statusP');
       $agama = $this->input->post('agama');
       $alamat = $this->input->post('alamat');
+      $kecamatan = $this->input->post('kecamatan');
+      $kelurahan = $this->input->post('kelurahan');
       $pendidikan = $this->input->post('pendidikan_terakhir');
       $jurusan = $this->input->post('jurusan');
+      $tglLulus = $this->input->post('tglLulus');
 
       $config['cacheable']    = true; //boolean, the default is true
       $config['cachedir']     = './assets/'; //string, the default is application/cache/
@@ -118,7 +104,6 @@ class Cpencaker extends CI_Controller
       $this->ciqrcode->initialize($config);
 
       $image_name=$nik.'.png'; //buat name dari qr code sesuai dengan nik
-
       $params['data'] = $nik; //data yang akan di jadikan QR CODE
       $params['level'] = 'H'; //H=High
       $params['size'] = 10;
@@ -131,8 +116,15 @@ class Cpencaker extends CI_Controller
       $this->load->library('upload', $config);
 
       if (! $this->upload->do_upload('foto')) {
-        $error = array('error' => $this->upload->display_errors());
-        $this->load->view('Pencaker/VregistrasiPencaker', $error);
+        $this->session->set_flashdata('msg',
+                  '<div class="alert alert-block alert-danger fade in">
+                    <button data-dismiss="alert" class="close close-sm" type="button">
+                                        <i class="icon-remove"></i>
+                                    </button>
+                    <strong>Maaf!</strong> Anda harus mengupload foto atau ukuran foto anda terlalu besar,
+                    ukuran foto harus dibawah <strong>3000kb</strong>.
+                  </div>');
+        $this->load->view('Pencaker/VregistrasiPencaker',$data);
       }
       else {
         $file = $_FILES['foto']['name'];
@@ -145,11 +137,15 @@ class Cpencaker extends CI_Controller
                       'statusPernikahan'=>$statusPernikahan,
                       'agama'=>$agama,
                       'alamat'=>$alamat,
+                      'id_kecamatan'=>$kecamatan,
+                      'id_kelurahan'=>$kelurahan,
                       'username'=>$username,
                       'email'=>$email,
                       'noTel'=>$noTel,
                       'pendidikan'=>$pendidikan,
                       'jurusan'=>$jurusan,
+                      'tglIjazah'=>$tglLulus,
+                      'status_WN'=>'WNI',
                       'foto'=>$file,
                       'qr_code'=>$image_name
         );
@@ -180,7 +176,11 @@ class Cpencaker extends CI_Controller
           $this->email->from('minformatikaclass01@gmail.com','Disnaker Kab.Bandung');
           $this->email->to($email);
           $this->email->subject('Registrasi Akun');
-          $this->email->message('Selamat akun anda terdaftar, untuk memverifikasi akun silakan klik link dibawah<br><br>'.
+          $this->email->message('Selamat akun anda terdaftar dengan <br><br>
+          Username :
+          '.$username.'<br>
+          Password :'.$password.'<br>
+          Untuk memverifikasi akun silakan klik link dibawah<br><br>'.
           site_url("Cpencaker/verification/$encrypted_id"));
           echo "Email terkirim";
         }
@@ -207,14 +207,22 @@ class Cpencaker extends CI_Controller
     $whereU = array('username' => $this->session->userdata('username'));
     $cekU = $this->Mhome->cek_user('pencaker',$whereU)->row_array();
     $nik=$cekU['nik'];
+    $id=$cekU['id_kecamatan'];
+    $idK=$cekU['id_kelurahan'];
     $where = array ('nik'=>$nik);
+    $whereA['id_kecamatan'] = $id;
+    $whereB['id_kelurahan'] = $idK;
     $data['pencaker'] = $this->Mhome->get_pencaker($where)->result();
-    $data['pendidikan'] = $this->Mhome->get_pendidikan($where)->result();
+    $data['pendidikanAkhir'] = $this->Mhome->get_pendidikan($nik)->row_array();
+    $data['pendidikan'] = $this->Mhome->get_pendidikanSemua($where)->result();
     $data['portofolio'] = $this->Mhome->get_portofolio($where)->result();
     $data['kemampuan'] = $this->Mhome->get_kemampuan($where)->result();
+    $data['kecamatan'] = $this->Mhome->get_kecamatan($where,$whereA)->row_array();
+    $data['kelurahan'] = $this->Mhome->get_kel($where,$whereB)->row_array();
+    $data['jumlah']= $this->notif()->num_rows();
+    $data['notif'] = $this->notif()->result();
     $this->load->view('Pencaker/VprofilPencaker',$data);
   }
-
   //Edit Profil Pencaker start
   public function editProfil()
   {
@@ -230,12 +238,14 @@ class Cpencaker extends CI_Controller
     $nik=$cekU['nik'];
     $where = array ('nik'=>$nik);
     $data['pencaker'] = $this->Mhome->get_pencaker($where)->result();
-
+    $data['listKecamatan'] = $this->Mhome->list_kecamatan()->result();
     $nama = $this->input->post('nama');
     $email = $this->input->post('email');
     $noTel = $this->input->post('noTel');
     $statusPernikahan = $this->input->post('statusP');
     $alamat = $this->input->post('alamat');
+    $kecamatan = $this->input->post('kecamatan');
+    $kelurahan = $this->input->post('kelurahan');
     $pendidikan = $this->input->post('pendidikan_terakhir');
     $jurusan = $this->input->post('jurusan');
     $config['upload_path']          = './uploads/';
@@ -250,6 +260,8 @@ class Cpencaker extends CI_Controller
                                   </button>
                   <strong>Maaf!</strong> Anda harus mengupload foto baru.
                 </div>');
+      $data['jumlah']= $this->notif()->num_rows();
+      $data['notif'] = $this->notif()->result();
       $this->load->view('Pencaker/VeditProfilPencaker',$data);
     }
     else {
@@ -257,6 +269,8 @@ class Cpencaker extends CI_Controller
       $upload_data = $this->upload->data();
       $data = array('namaLengkap'=>$nama,
                     'alamat'=>$alamat,
+                    'id_kecamatan'=>$kecamatan,
+                    'id_kelurahan'=>$kelurahan,
                     'noTel'=>$noTel,
                     'email'=>$email,
                     'statusPernikahan'=>$statusPernikahan,
@@ -270,10 +284,6 @@ class Cpencaker extends CI_Controller
   }
   //Edit Profil Pencaker end
   //Cetak AK-1 start
-  public function cetak()
-  {
-    redirect('Cetak/pdf');
-  }
   //Cetak AK-1 end
   //Profil pencaker ends
 
@@ -287,34 +297,41 @@ class Cpencaker extends CI_Controller
       $data['pencaker'] = $this->Mhome->get_pencaker($where)->result();
 
       $nik = $this->input->post('nik');
-      $tingkat = $this->input->post('tingkat');
+      $tingkat = explode("-",$this->input->post('tingkat'));
+      $nama_pendidikan = $tingkat[1];
+      $level = $tingkat[0];
       $namaSekolah = $this->input->post('namaSekolah');
       $jurusan = $this->input->post('jurusan');
       $alamatSekolah = $this->input->post('alamatSekolah');
+      $tglLulus = $this->input->post('tglLulus');
       $config['upload_path']          = './uploads/';
       $config['allowed_types']        = 'jpeg|jpg|png';
       $config['max_size']             = 3000;
       $this->load->library('upload', $config);
-
       if (! $this->upload->do_upload('fotoIjazah')) {
         $this->session->set_flashdata('msg',
                   '<div class="alert alert-block alert-danger fade in">
                     <button data-dismiss="alert" class="close close-sm" type="button">
                                         <i class="icon-remove"></i>
                                     </button>
-                    <strong>Maaf!</strong> Anda harus mengupload <strong>FOTO IJAZAH</strong>.
+                    <strong>Maaf!</strong> Anda harus mengupload <strong>FOTO IJAZAH</strong> atau Foto ijazah anda terlalu besar maksimum kapasistas <strong>3000kb</strong>.
                   </div>');
+        $data['listPendidikan'] = $this->Mhome->list_pendidikan()->result();
+        $data['jumlah']= $this->notif()->num_rows();
+        $data['notif'] = $this->notif()->result();
         $this->load->view('Pencaker/VriwayatPendidikan', $data);
       }
       else {
         $file = $_FILES['fotoIjazah']['name'];
         $upload_data = $this->upload->data();
         $data = array('nik'=>$nik,
-                      'tingkat'=>$tingkat,
+                      'tingkat'=>$nama_pendidikan,
                       'jurusan'=>$jurusan,
                       'nama_sekolah'=>$namaSekolah,
                       'alamat_sekolah'=>$alamatSekolah,
-                      'fotoIjazah'=>$file);
+                      'tgl_lulus' =>$tglLulus,
+                      'fotoIjazah'=>$file,
+                      'id_list_pendidikan'=>$level);
         $this->Mhome->ins_pendidikan('riwayat_pendidikan',$data);
         redirect('Cpencaker/profilPencaker');
     }
@@ -337,7 +354,7 @@ class Cpencaker extends CI_Controller
     //   $error = array('error' => $this->upload->display_errors());
     //   $this->load->view('Pencaker/VportofolioPencaker', $error);
     // }
-    //else {
+    // else {
       $whereU = array('username' => $this->session->userdata('username'));
       $cekU = $this->Mhome->cek_user('pencaker',$whereU)->row_array();
       $nik=$cekU['nik'];
@@ -351,7 +368,7 @@ class Cpencaker extends CI_Controller
                     'foto_sertifikat'=>$file);
       $this->Mhome->ins_portofolio('portofolio',$data);
       redirect('Cpencaker/profilPencaker');
-    //}
+    // }
   }
   //Portofolio end
 
@@ -378,20 +395,46 @@ class Cpencaker extends CI_Controller
     $whereU = array('username' => $this->session->userdata('username'));
     $cekU = $this->Mhome->cek_user('pencaker',$whereU)->row_array();
     $nik=$cekU['nik'];
-    $where = array ('nik'=>$nik);
-    $data['pendidikan'] = $this->Mhome->dataPelamar($where)->row();
-    $whereA['id_lowongan']=$id;
-    $table['lowongan']=$this->Mhome->dataLowongan($whereA)->row();
-    if ($data['pendidikan'] == $table['lowongan']) {
+    // $where = array ('nik'=>$nik);
+    $data['pendidikan'] = $this->Mhome->dataPendidikanPelamar($nik)->row_array();
+    $where['id_lowongan']=$id;
+    $data['lowongan']=$this->Mhome->dataPendidikanLowongan($where)->row_array();
+    $data['jumlah']= $this->notif()->num_rows();
+    $data['notif'] = $this->notif()->result();
+    $cari = array('nik'=>$nik,'id_lowongan'=>$id);
+    $cek = $this->Mhome->cekLamaran($cari)->num_rows();
+    // print_r($data['pendidikan']['id_list_pendidikan']);
+    // print_r($data['lowongan']['level']);
+    // echo $data['pendidikan']['level'];
+    // echo $data['lowongan'];
+    // print_r($data['jumlah']);
+    // echo "<br>";
+    // echo $cek;echo "<br>";
+    // echo $where['id_lowongan'];echo "<br>";
+    // echo $nik;
+    if ($cek > 0) {
+      $this->session->set_flashdata('msg',
+                '<div class="alert alert-block alert-danger fade in">
+                  <button data-dismiss="alert" class="close close-sm" type="button">
+                                      <i class="icon-remove"></i>
+                                  </button>
+                  <strong>MAAF!</strong> Data lamaran anda sudah ada dilowongan ini.
+                </div>');
+      $where['id_lowongan']=$id;
+      $data['lowongan']=$this->Mhome->get_klw($where)->row();
+      $this->session->set_userdata($data);
+      $this->load->view('Pencaker/VdetailLowongan',$data);
+    }
+    elseif ($data['pendidikan']['id_list_pendidikan'] >= $data['lowongan']['level']) {
       $this->session->set_flashdata('msg',
                 '<div class="alert alert-success fade in">
                   <button data-dismiss="alert" class="close close-sm" type="button">
                                       <i class="icon-remove"></i>
                                   </button>
-                  <strong>Selamat!</strong> Lamaran telah masuk mohon tunggu pemberitahuan selanjutnya.
+                  <strong>SELAMAT!</strong> Lamaran telah masuk mohon tunggu pemberitahuan selanjutnya.
                 </div>');
       $where['id_lowongan']=$id;
-      $table['lowongan']=$this->Mhome->get_klw($where)->row();
+      $data['lowongan']=$this->Mhome->get_klw($where)->row();
       $whereU = array ('username' => $this->session->userdata('username'));
       $cekU = $this->Mhome->cek_user('pencaker',$whereU)->row_array();
       $nik=$cekU['nik'];
@@ -403,9 +446,11 @@ class Cpencaker extends CI_Controller
                     'id_lowongan' => $idLowongan);
       $this->Mhome->ins_lamaran('melamar',$data);
       $where['id_lowongan']=$id;
-      $table['lowongan']=$this->Mhome->get_klw($where)->row();
-      $this->session->set_userdata($table);
-      $this->load->view('Pencaker/VdetailLowongan',$table);
+      $data['lowongan']=$this->Mhome->get_klw($where)->row();
+      $data['jumlah']= $this->notif()->num_rows();
+      $data['notif'] = $this->notif()->result();
+      $this->session->set_userdata($data);
+      $this->load->view('Pencaker/VdetailLowongan',$data);
     }
     else {
       $this->session->set_flashdata('msg',
@@ -413,26 +458,51 @@ class Cpencaker extends CI_Controller
                   <button data-dismiss="alert" class="close close-sm" type="button">
                                       <i class="icon-remove"></i>
                                   </button>
-                  <strong>Maaf!</strong> Data diri anda tidak cocok dengan lowongan ini.
+                  <strong>MAAF!</strong> Data diri anda tidak cocok dengan lowongan ini
+                  atau silakan lengkapi <strong>PROFIL</strong> anda!.
                 </div>');
       $where['id_lowongan']=$id;
-      $table['lowongan']=$this->Mhome->get_klw($where)->row();
-      $this->session->set_userdata($table);
-      $this->load->view('Pencaker/VdetailLowongan',$table);
+      $data['lowongan']=$this->Mhome->get_klw($where)->row();
+      $this->session->set_userdata($data);
+      $this->load->view('Pencaker/VdetailLowongan',$data);
     }
   }
   //melamar lowongan ends
 
-  //Pencarian lowongan Start
- //  public function cariLowongan()
- //  {
- //    $nama_lowongan=$this->input->get('query');
- //    $data=$this->Mhome->search($nama_lowongan);
- //    //$table['lowongan']=$this->Mhome->lihat_lowongan('lowongan')->result();
- //    echo json_encode($data);
- //    $this->load->view('Pencaker/VhomePencaker',json_encode($data));
- // }
-  //Pencarian Lowongan End
+  //list Lamran start
+  public function listLamaran()
+  {
+    $whereU = array('username' => $this->session->userdata('username'));
+    $cekU = $this->Mhome->cek_user('pencaker',$whereU)->row_array();
+    $nik=$cekU['nik'];
+    $where = array ('nik'=>$nik);
+    $data['list']=$this->Mhome->listLamaran($where)->result();
+    $data['jumlah']= $this->notif()->num_rows();
+    $data['notif'] = $this->notif()->result();
+    $this->load->view('Pencaker/VlistStatusLamaran',$data);
+  }
+  //list Lamaran ends
+
+  //notifikasi Start
+  public function notif()
+  {
+    $whereU = array('username' => $this->session->userdata('username'));
+    $cekU = $this->Mhome->cek_user('pencaker',$whereU)->row_array();
+    $nik=$cekU['nik'];
+    $where = array ('nik'=>$nik, 'status_notifikasi' => 0, 'status_lamaran !='=>'Belum Diterima');
+    $data = $this->Mhome->notifikasi($where);
+    return $data;
+  }
+  public function get_nik($id)
+  {
+    $whereU = array('username' => $this->session->userdata('username'));
+    $cekU = $this->Mhome->cek_user('pencaker',$whereU)->row_array();
+    $nik=$cekU['nik'];
+    $where = array ('nik'=>$nik, 'id_lowongan'=>$id);
+    $data = $this->Mhome->update_notifikasi('melamar',$where);
+    redirect('Cpencaker/listLamaran');
+  }
+  //notifikasi ends
 
 }
 

@@ -11,8 +11,11 @@
     <meta name="author" content="GeeksLabs">
     <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
     <link rel="shortcut icon" href="img/favicon.png">
+    <link rel="icon" type="image/png" href="<?php echo base_url('uploads/logo.png'); ?>">
 
-    <title>Beranda Pencari Kerja</title>
+    <title>
+      Bursa Kerja Online Kab.Bandung
+    </title>
 
     <!-- Bootstrap CSS -->
     <link href="<?php echo base_url();?>assets/css/bootstrap.min.css" rel="stylesheet">
@@ -56,7 +59,9 @@
         </div>
 
         <!--logo start-->
-        <a href="<?php echo base_url('Cpencaker/index'); ?>" class="logo">Kabupaten <span class="lite">Bandung</span></a>
+        <a href="<?php echo base_url('Cpencaker/index'); ?>"  class="logo">Kabupaten <span class="lite">Bandung</span>
+          <img align="left" width="30" height="30" src="<?php echo base_url('uploads/logo.png'); ?>" alt=""></img>
+        </a>
         <!--logo end-->
 
         <div class="nav search-row" id="top_menu">
@@ -82,44 +87,26 @@
               <a data-toggle="dropdown" class="dropdown-toggle" href="#">
 
                               <i class="icon-bell-l"></i>
-                              <span class="badge bg-important">7</span>
+                              <span class="badge bg-important"><?php echo $jumlah; ?></span>
                           </a>
               <ul class="dropdown-menu extended notification">
                 <div class="notify-arrow notify-arrow-blue"></div>
                 <li>
-                  <p class="blue">You have 4 new notifications</p>
+                  <p class="blue">You have <?php echo $jumlah; ?> new notifications</p>
                 </li>
-                <li>
-                  <a href="#">
-                                      <span class="label label-primary"><i class="icon_profile"></i></span>
-                                      Friend Request
-                                      <span class="small italic pull-right">5 mins</span>
-                                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                                      <span class="label label-warning"><i class="icon_pin"></i></span>
-                                      John location.
-                                      <span class="small italic pull-right">50 mins</span>
-                                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                                      <span class="label label-danger"><i class="icon_book_alt"></i></span>
-                                      Project 3 Completed.
-                                      <span class="small italic pull-right">1 hr</span>
-                                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                                      <span class="label label-success"><i class="icon_like"></i></span>
-                                      Mick appreciated your work.
-                                      <span class="small italic pull-right"> Today</span>
-                                  </a>
-                </li>
-                <li>
-                  <a href="#">See all notifications</a>
-                </li>
+                <?php
+                 foreach ($notif as $k) {
+                   ?>
+
+                  <li>
+                    <a href="<?php echo base_url('Cpencaker/get_nik/'.$k->id_lowongan); ?>">
+                                        <span class="label label-danger"><i class="icon_book_alt"></i></span>
+                                        <?php echo $k->nama_lowongan; ?>
+                                        <?php echo $k->nama_perusahaan; ?>
+                                        <span class="small italic pull-right"><?php echo $k->status_lamaran; ?></span>
+                                    </a>
+                  </li>
+              <?php } ?>
               </ul>
             </li>
             <!-- alert notification end-->
@@ -138,22 +125,7 @@
                   <a href="<?php echo base_url('Cpencaker/profilPencaker'); ?>"><i class="icon_profile"></i> My Profile</a>
                 </li>
                 <li>
-                  <a href="<?php echo base_url('Chome/riwayatPendidikanPencaker'); ?>"><i class="icon_mail_alt"></i> Riwayat Pendidikan</a>
-                </li>
-                <li>
-                  <a href="#"><i class="icon_clock_alt"></i> Timeline</a>
-                </li>
-                <li>
-                  <a href="#"><i class="icon_chat_alt"></i> Chats</a>
-                </li>
-                <li>
                   <a href="<?php echo base_url('Chome/logout'); ?>"><i class="icon_key_alt"></i> Log Out</a>
-                </li>
-                <li>
-                  <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>
-                </li>
-                <li>
-                  <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>
                 </li>
               </ul>
             </li>
@@ -175,68 +147,11 @@
                             <span>Dashboard</span>
                         </a>
             </li>
-            <li class="sub-menu">
-              <a href="javascript:;" class="">
-                            <i class="icon_document_alt"></i>
-                            <span>Forms</span>
-                            <span class="menu-arrow arrow_carrot-right"></span>
+            <li class="active">
+              <a class="" href="<?php echo base_url('Cpencaker/listLamaran'); ?>">
+                            <i class="far fa-file-alt"></i>
+                            <span>List Lamaran Anda</span>
                         </a>
-              <ul class="sub">
-                <li><a class="" href="form_component.html">Form Elements</a></li>
-                <li><a class="" href="form_validation.html">Form Validation</a></li>
-              </ul>
-            </li>
-            <li class="sub-menu">
-              <a href="javascript:;" class="">
-                            <i class="icon_desktop"></i>
-                            <span>UI Fitures</span>
-                            <span class="menu-arrow arrow_carrot-right"></span>
-                        </a>
-              <ul class="sub">
-                <li><a class="" href="general.html">Elements</a></li>
-                <li><a class="" href="buttons.html">Buttons</a></li>
-                <li><a class="" href="grids.html">Grids</a></li>
-              </ul>
-            </li>
-            <li>
-              <a class="" href="widgets.html">
-                            <i class="icon_genius"></i>
-                            <span>Widgets</span>
-                        </a>
-            </li>
-            <li>
-              <a class="" href="chart-chartjs.html">
-                            <i class="icon_piechart"></i>
-                            <span>Charts</span>
-
-                        </a>
-
-            </li>
-
-            <li class="sub-menu">
-              <a href="javascript:;" class="">
-                            <i class="icon_table"></i>
-                            <span>Tables</span>
-                            <span class="menu-arrow arrow_carrot-right"></span>
-                        </a>
-              <ul class="sub">
-                <li><a class="" href="basic_table.html">Basic Table</a></li>
-              </ul>
-            </li>
-
-            <li class="sub-menu">
-              <a href="javascript:;" class="">
-                            <i class="icon_documents_alt"></i>
-                            <span>Pages</span>
-                            <span class="menu-arrow arrow_carrot-right"></span>
-                        </a>
-              <ul class="sub">
-                <li><a class="" href="profile.html">Profile</a></li>
-                <li><a class="" href="login.html"><span>Login Page</span></a></li>
-                <li><a class="" href="contact.html"><span>Contact Page</span></a></li>
-                <li><a class="" href="blank.html">Blank Page</a></li>
-                <li><a class="" href="404.html">404 Error</a></li>
-              </ul>
             </li>
 
           </ul>
@@ -281,7 +196,7 @@
                   </tr>
                   <tr>
                     <td>Tanggal Lahir</td>
-                    <td><p><?php echo $k->tglLahir; ?></p></td>
+                    <td><p><?php echo date('d/m/Y', strtotime($k->tglLahir));?></p></td>
                   </tr>
                   <tr>
                     <td>Jenis Kelamin</td>
@@ -289,7 +204,11 @@
                   </tr>
                   <tr>
                     <td>Pendidikan Terakhir</td>
-                    <td><p><?php echo $k->pendidikan; echo$k->jurusan ;?></p></td>
+                    <td><p><?php echo $pendidikanAkhir['nama_pendidikan'];?></p></td>
+                  </tr>
+                  <tr>
+                    <td>Jurusan</td>
+                    <td><p><?php echo $pendidikanAkhir['jurusan'] ; ?></p></td>
                   </tr>
                   <tr>
                     <td>Status Pernikahan</td>
@@ -300,8 +219,20 @@
                     <td><?php echo $k->agama; ?></td>
                   </tr>
                   <tr>
+                    <td>Status Warga Negara</td>
+                    <td><?php echo $k->status_WN; ?></td>
+                  </tr>
+                  <tr>
                     <td>Alamat</td>
                     <td><p><?php echo $k->alamat; ?></p></td>
+                  </tr>
+                  <tr>
+                    <td>Kecamatan</td>
+                    <td><p><?php echo $kecamatan['nama_kecamatan']; ?></p></td>
+                  </tr>
+                  <tr>
+                    <td>Kelurahan</td>
+                    <td><p><?php echo $kelurahan['nama_kelurahan']; ?></p></td>
                   </tr>
                   <tr>
                     <td>Email</td>
@@ -326,6 +257,7 @@
                   <th>Nama Sekolah</th>
                   <th>Jurusan</th>
                   <th>Alamat Sekolah</th>
+                  <th>Tanggal Lulus atau tanggal ijazah</th>
                   <th>Foto Ijazah</th>
                 </thead>
                 <tbody>
@@ -335,6 +267,7 @@
                       <td><p><?php echo $k->nama_sekolah; ?></p></td>
                       <td><p><?php echo $k->jurusan; ?></p></td>
                       <td><p><?php echo $k->alamat_sekolah; ?></p></td>
+                      <td><p><?php echo $k->tgl_lulus; ?></p></td>
                       <td>
                         <img  width="200" height="200"  src="<?php echo base_url('uploads/'.$k->fotoIjazah) ?>"></img>
                       </td>
@@ -360,9 +293,9 @@
                         <td><p><?php echo $k->lama_bekerja; ?></p></td>
                         <td><p><?php echo $k->nama_sertifikat; ?></p></td>
                         <td>
-                          <p>
+                          <!-- <p>
                             <img  width="200" height="200"  src="<?php echo base_url('uploads/'.$k->foto_sertifikat) ?>"></img>
-                          </p>
+                          </p> -->
                         </td>
                       </tr>
                     <?php } ?>
@@ -385,8 +318,9 @@
               <p align = "right">
                 <a class="btn btn-primary" href="<?php echo base_url('Chome/editProfilPencaker'); ?>" title="Bootstrap 3 themes generator">Edit Profil</a>
                 <a class="btn btn-warning" href="<?php echo base_url('Chome/riwayatPendidikanPencaker'); ?>" title="Bootstrap 3 themes generator">Tambah Riwayat Pendidikan</a>
-                <a class="btn btn-success" href="<?php echo base_url('Cpencaker/cetak'); ?>" title="Bootstrap 3 themes generator">Cetak Kartu AK-1</a>
+                <a class="btn btn-success" href="<?php echo base_url('Cetak/pdf'); ?>" title="Bootstrap 3 themes generator">Cetak Kartu AK-1</a>
                 <a class="btn btn-primary" href="<?php echo base_url('Chome/portofolioPencaker'); ?>" title="Bootstrap 3 themes generator">Tambah Portofolio</a>
+                <a class="btn btn-success" href="<?php echo base_url('Cetak/suratLamaranPencaker'); ?>" title="Bootstrap 3 themes generator">Cetak Surat Lamaran</a>
                 <a class="btn btn-warning" href="<?php echo base_url('Chome/kemampuanPencaker'); ?>" title="Bootstrap 3 themes generator">Tambah Kemampuan</a>
               </p>
             </div>

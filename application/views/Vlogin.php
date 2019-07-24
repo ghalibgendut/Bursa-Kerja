@@ -11,8 +11,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <meta name="author" content="GeeksLabs">
   <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
   <link rel="shortcut icon" href="img/favicon.png">
+  <link rel="icon" type="image/png" href="<?php echo base_url('uploads/logo.png'); ?>">
 
-  <title>Login</title>
+  <title>
+    Bursa Kerja Online Kab.Bandung
+  </title>
 
   <!-- Bootstrap CSS -->
   <link href="<?php echo base_url();?>assets/css/bootstrap.min.css" rel="stylesheet">
@@ -45,9 +48,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <div class="container">
     <form class="login-form" action="<?php echo base_url('Chome/login'); ?>" method="post">
       <div class="login-wrap">
-        <p class="login-img"><i class="icon_lock_alt"></i></p>
+        <p class="login-img">
+          <img align="center" width="70" height="70" src="<?php echo base_url('uploads/logo.png'); ?>" alt=""></img>
+        </p>
              <p style="color" : red>
-               <?php echo $this->session->flashdata("Gagal") ?>
+               <?php echo $this->session->flashdata("Gagal"); ?>
              </p>
         <div class="input-group">
           <span class="input-group-addon"><i class="icon_profile"></i></span>

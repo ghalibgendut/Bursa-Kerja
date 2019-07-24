@@ -11,8 +11,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
    <meta name="author" content="GeeksLabs">
    <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
    <link rel="shortcut icon" href="img/favicon.png">
+   <link rel="icon" type="image/png" href="<?php echo base_url('uploads/logo.png'); ?>">
 
-   <title>Registrasi Pencari Kerja</title>
+   <title>
+     Bursa Kerja Online Kab.Bandung
+   </title>
 
    <!-- Bootstrap CSS -->
    <link href="<?php echo base_url();?>assets/css/bootstrap.min.css" rel="stylesheet">
@@ -59,7 +62,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
        </div>
 
        <!--logo start-->
-       <a href="<?php echo base_url('Chome/index'); ?>" class="logo">Bursa Kerja <span class="lite">Online</span></a>
+       <a href="<?php echo base_url('Chome/index'); ?>"  class="logo">Kabupaten <span class="lite">Bandung</span>
+         <img align="left" width="30" height="30" src="<?php echo base_url('uploads/logo.png'); ?>" alt=""></img>
+       </a>
        <!--logo end-->
 
        <div class="nav search-row" id="top_menu">
@@ -85,73 +90,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
          <!-- sidebar menu start-->
          <ul class="sidebar-menu">
            <li class="active">
-             <a class="" href="index.html">
+             <a class="" href="<?php echo base_url('Chome/index'); ?>">
                            <i class="icon_house_alt"></i>
                            <span>Dashboard</span>
                        </a>
-           </li>
-           <li class="sub-menu">
-             <a href="javascript:;" class="">
-                           <i class="icon_document_alt"></i>
-                           <span>Forms</span>
-                           <span class="menu-arrow arrow_carrot-right"></span>
-                       </a>
-             <ul class="sub">
-               <li><a class="" href="form_component.html">Form Elements</a></li>
-               <li><a class="" href="form_validation.html">Form Validation</a></li>
-             </ul>
-           </li>
-           <li class="sub-menu">
-             <a href="javascript:;" class="">
-                           <i class="icon_desktop"></i>
-                           <span>UI Fitures</span>
-                           <span class="menu-arrow arrow_carrot-right"></span>
-                       </a>
-             <ul class="sub">
-               <li><a class="" href="general.html">Components</a></li>
-               <li><a class="" href="buttons.html">Buttons</a></li>
-               <li><a class="" href="grids.html">Grids</a></li>
-             </ul>
-           </li>
-           <li>
-             <a class="" href="widgets.html">
-                           <i class="icon_genius"></i>
-                           <span>Widgets</span>
-                       </a>
-           </li>
-           <li>
-             <a class="" href="chart-chartjs.html">
-                           <i class="icon_piechart"></i>
-                           <span>Charts</span>
-
-                       </a>
-
-           </li>
-
-           <li class="sub-menu">
-             <a href="javascript:;" class="">
-                           <i class="icon_table"></i>
-                           <span>Tables</span>
-                           <span class="menu-arrow arrow_carrot-right"></span>
-                       </a>
-             <ul class="sub">
-               <li><a class="" href="basic_table.html">Basic Table</a></li>
-             </ul>
-           </li>
-
-           <li class="sub-menu">
-             <a href="javascript:;" class="">
-                           <i class="icon_documents_alt"></i>
-                           <span>Pages</span>
-                           <span class="menu-arrow arrow_carrot-right"></span>
-                       </a>
-             <ul class="sub">
-               <li><a class="" href="profile.html">Profile</a></li>
-               <li><a class="" href="login.html"><span>Login Page</span></a></li>
-               <li><a class="" href="contact.html"><span>Contact Page</span></a></li>
-               <li><a class="" href="blank.html">Blank Page</a></li>
-               <li><a class="" href="404.html">404 Error</a></li>
-             </ul>
            </li>
 
          </ul>
@@ -184,69 +126,70 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                  if (validation_errors()) {
                    echo validation_errors();
                  }
+                 echo $this->session->flashdata('msg');
                   ?>
                  <form class="form-horizontal" action="<?php echo base_url('Cpencaker/registrasi'); ?>" method="post" enctype="multipart/form-data">
                    <div class="form-group">
                      <label class="col-sm-2 control-label">Username</label>
                      <div class="col-sm-10">
-                       <input type="text" class="form-control round-input" placeholder="username" name="uname">
+                       <input type="text" class="form-control round-input" placeholder="username" name="uname" required>
                      </div>
                    </div>
                    <div class="form-group">
                      <label class="col-sm-2 control-label">Password</label>
                      <div class="col-sm-10">
-                       <input type="password" class="form-control round-input" placeholder="Password" name="pass">
+                       <input type="password" class="form-control round-input" placeholder="Password" name="pass" required>
                      </div>
                    </div>
                    <div class="form-group">
                      <label class="col-sm-2 control-label">e-mail</label>
                      <div class="col-sm-10">
-                       <input type="text" class="form-control round-input" placeholder="e-mail" name="email">
+                       <input type="email" class="form-control round-input" placeholder="e-mail" name="email" required>
                      </div>
                    </div>
                    <div class="form-group">
                      <label class="col-sm-2 control-label">No Telpon</label>
                      <div class="col-sm-10">
-                       <input type="text" class="form-control round-input" placeholder="No Telepon" name="noTel">
+                       <input type="text" class="form-control round-input" placeholder="No Telepon" name="noTel" required>
                      </div>
                    </div>
                    <div class="form-group">
                      <label class="col-sm-2 control-label">NIK</label>
                      <div class="col-sm-10">
-                       <input type="text" class="form-control round-input" placeholder="NIK" name="nik">
+                       <input type="text" class="form-control round-input" placeholder="NIK" name="nik" required>
                      </div>
                    </div>
                    <div class="form-group">
                      <label class="col-sm-2 control-label">Nama Lengkap</label>
                      <div class="col-sm-10">
-                       <input type="text" class="form-control round-input" placeholder="Nama Lengkap" name="nama">
+                       <input type="text" class="form-control round-input" placeholder="Nama Lengkap" name="nama" required>
                      </div>
                    </div>
                    <div class="form-group">
                      <label class="col-sm-2 control-label">Tempat Lahir</label>
                      <div class="col-sm-10">
-                       <input type="text" class="form-control round-input" placeholder="Tempat Lahir" name="lahir">
+                       <input type="text" class="form-control round-input" placeholder="Tempat Lahir" name="lahir" required>
                      </div>
                    </div>
                    <div class="form-group">
                      <label class="col-sm-2 control-label">Tanggal Lahir</label>
                      <div class="col-sm-2">
-                       <input class="form-control" type="date" size="16" name="tglLahir">
+                       <input class="form-control" type="date" size="16" name="tglLahir" required>
                      </div>
                    </div>
                    <div class="form-group">
                      <label class="col-sm-2 control-label">Jenis Kelamin</label>
                      <div class="col-sm-2">
-                       <select class="form-control m-bot15" name="jenisK">
-                                               <option value="Laki-laki">Laki-laki</option>
-                                               <option value="Perempuan">Perempuan</option>
+                       <select class="form-control m-bot15" name="jenisK" required>
+                                               <option value="Pria">Pria</option>
+                                               <option value="Wanita">Wanita</option>
                         </select>
                      </div>
                    </div>
                    <div class="form-group">
                      <label class="col-sm-2 control-label">Status Pernikahan</label>
                      <div class="col-sm-2">
-                       <select class="form-control m-bot15" name="statusP">
+                       <select class="form-control m-bot15" name="statusP" required>
                                                <option value="Kawin">Kawin</option>
                                                <option value="Lajang">Lajang</option>
                                                <option value="Janda">Janda</option>
@@ -257,7 +200,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                    <div class="form-group">
                      <label class="col-sm-2 control-label">Agama</label>
                      <div class="col-sm-2">
-                       <select class="form-control m-bot15" name="agama">
+                       <select class="form-control m-bot15" name="agama" required>
                                                <option value="Islam">Islam</option>
                                                <option value="Khatolik">Khatolik</option>
                                                <option value="Protestan">Protestan</option>
@@ -270,21 +213,37 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                    <div class="form-group">
                      <label class="col-sm-2 control-label">Alamat</label>
                      <div class="col-sm-10">
-                       <input type="text" class="form-control round-input" placeholder="Alamat" name="alamat">
+                       <input type="text" class="form-control round-input" placeholder="Alamat" name="alamat" required>
+                     </div>
+                   </div>
+                   <div class="form-group">
+                     <label class="col-sm-2 control-label">Kecamatan</label>
+                     <div class="col-sm-2">
+                       <select class="form-control m-bot15" name="kecamatan" id="kecamatan" required>
+                         <option value=""disabled diselected>--Pilih Kecamatan--</option>
+                         <?php foreach ($listKecamatan as $k) { ?>
+                                <option value="<?php echo"$k->id_kecamatan"; ?>"><?php echo "$k->nama_kecamatan" ; ?></option>
+                         <?php } ?>
+                        </select>
+                     </div>
+                   </div>
+                   <div class="form-group">
+                     <label class="col-sm-2 control-label">Kelurahan</label>
+                     <div class="col-sm-2">
+                       <select class="form-control m-bot15" name="kelurahan" id="kelurahan" required>
+                         <option value=""disabled diselected>--Pilih Kelurahan--</option>
+
+                       </select>
                      </div>
                    </div>
                    <div class="form-group">
                      <label class="col-sm-2 control-label">Pendidikan Terakhir</label>
                      <div class="col-sm-2">
-                       <select class="form-control m-bot15" name="pendidikan_terakhir">
-                                               <option value="SD">SD / Sederajat</option>
-                                               <option value="SMP/Sederajat">SMP / Sederajat</option>
-                                               <option value="SMA/Sederajat">SMA / Sederajat</option>
-                                               <option value="D2/D3">D2 /D3</option>
-                                               <option value="S1/D4">S1/D4</option>
-                                               <option value="S2">S2</option>
-                                               <option value="S3">S3</option>
-                        </select>
+                       <select class="form-control m-bot15" name="pendidikan_terakhir" required>
+                         <option value=""disabled diselected>--Pilih Pendidikan--</option>
+                         <?php foreach ($listPendidikan as $k) { ?>
+                                <option value="<?php echo"$k->nama_pendidikan"; ?>"><?php echo "$k->nama_pendidikan" ; ?></option>
+                         <?php } ?>
                      </div>
                    </div>
                    <div class="form-group">
@@ -294,12 +253,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                      </div>
                    </div>
                    <div class="form-group">
+                     <label class="col-sm-2 control-label">Tanggal Lulus atau Tanggal Ijazah</label>
+                     <div class="col-sm-2">
+                       <input class="form-control" type="date" size="16" name="tglLulus" required>
+                     </div>
+                   </div>
+                   <div class="form-group">
                      <label class="col-sm-2 control-label">Foto</label>
                      <div class="col-sm-10">
                        <input type="file" placeholder="Foto" name="foto">
                      </div>
                    </div>
-                   <input class="btn btn-primary btn-lg btn-block" type="submit" name="daftar" value="Registrasi"></input>
+                   <p align="left">
+                     <input class="btn btn-primary" type="submit" name="daftar" value="Registrasi"></input>
+                     <input class="btn btn-danger" type="reset" name="Reset" value="Reset"></input>
+                   </p>
                  </form>
                </div>
              </section>
@@ -354,8 +322,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
    <script src="<?php echo base_url();?>assets/js/form-component.js"></script>
    <!-- custome script for all page -->
    <script src="<?php echo base_url();?>assets/js/scripts.js"></script>
+   <script type="text/javascript">
+  	$(document).ready(function(){
+  		$('#kecamatan').change(function(){
+  			var id=$(this).val();
+  			$.ajax({
+  				url : "<?php echo base_url('Cpencaker/get_kelurahan');?>",
+  				method : "POST",
+  				data : {id: id},
+  				async : false,
+  		    dataType : "JSON",
+  				success: function(data){
+  					var html = '';
+  		            var i;
+  		            for(i=0; i<data.length; i++){
+  		                html += '<option value = "'+data[i].id_kelurahan+'">'+data[i].nama_kelurahan+'</option>';
+  		            }
+  		            $('#kelurahan').html(html);
 
-
+  				}
+  			});
+  		});
+  	});
+  </script>
  </body>
 
  </html>

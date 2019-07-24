@@ -11,8 +11,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <meta name="author" content="GeeksLabs">
   <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
   <link rel="shortcut icon" href="img/favicon.png">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
+  <link rel="icon" type="image/png" href="<?php echo base_url('uploads/logo.png'); ?>">
 
-  <title>Bursa Kerja Online Kab.Bandung</title>
+  <title>
+    Bursa Kerja Online Kab.Bandung
+  </title>
 
   <!-- Bootstrap CSS -->
   <link href="<?php echo base_url();?>assets/css/bootstrap.min.css" rel="stylesheet">
@@ -58,20 +63,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </div>
 
       <!--logo start-->
-      <a href="<?php echo base_url('Chome/index'); ?>" class="logo">Kabupaten <span class="lite">Bandung</span></a>
+      <a href="<?php echo base_url('Chome/index'); ?>"  class="logo">Kabupaten <span class="lite">Bandung</span>
+        <img align="left" width="30" height="30" src="<?php echo base_url('uploads/logo.png'); ?>" alt=""></img>
+      </a>
       <!--logo end-->
 
-      <div class="nav search-row" id="top_menu">
+      <!-- <div class="nav search-row" id="top_menu"> -->
         <!--  search form start -->
-        <ul class="nav top-menu">
-          <li>
-            <form class="navbar-form" action="<?php echo base_url('Chome/index'); ?>" method="get">
-              <input class="form-control" placeholder="Cari Lowongan Pekerjaan" type="search" name="query">
-            </form>
-          </li>
-        </ul>
+        <!-- <ul class="nav top-menu"> -->
+          <!-- <li> -->
+            <!-- <form class="navbar-form" action="<?php echo base_url('Chome/index'); ?>" method="get"> -->
+              <!-- <input class="form-control" placeholder="Cari Lowongan Pekerjaan" type="search" name="query"> -->
+              <!-- <button type="submit" class="btn btn-primary" name="cari">Cari Lowongan</button> -->
+            <!-- </form> -->
+          <!-- </li> -->
+        <!-- </ul> -->
         <!--  search form end -->
-      </div>
+      <!-- </div> -->
 
       <div class="top-nav notification-row">
         <!-- notificatoin dropdown start-->
@@ -107,10 +115,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <li class="active">
             <a class="" href="index.html">
                           <i class="icon_house_alt"></i>
-                          <span>Dashboard</span>
+                          <span>Home</span>
                       </a>
           </li>
-          
+
         </ul>
         <!-- sidebar menu end-->
       </div>
@@ -123,52 +131,50 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!--overview start-->
         <div class="row">
           <div class="col-lg-12">
-            <h3 class="page-header"><i class="fa fa-laptop"></i> Dashboard</h3>
+            <h3 class="page-header"><i class="fa fa-laptop"></i> Daftar Lowongan Kerja</h3>
             <ol class="breadcrumb">
               <li><i class="fa fa-home"></i><a href="<?php echo base_url('Chome/index'); ?>">Home</a></li>
               <li><i class="fa fa-laptop"></i>Dashboard</li>
             </ol>
           </div>
-          <div>
-            <table class="table table-striped" id="mydata">
-              <thead>
-                <th>No Siup</th>
-                <th>Nama Lowongan</th>
-                <th>Tanggal Publis</th>
-                <th>Tanggal Penutupan</th>
-                <th>Status</th>
-              </thead>
-              <tbody id="show_data">
-                <tr>
-                  <?php foreach ($lowongan as $key) {?>
-                    <td><?php echo $key->no_siup;?></td>
-                    <td><?php echo $key->nama_lowongan;?></td>
-                    <td><?php echo $key->tanggal_pendaftaran;?></td>
-                    <td><?php echo $key->batas_waktu;?></td>
-                    <td><?php echo $key->status;?></td>
-                    <td><a class="btn btn-primary" href="#">Lihat Lowongan</a></td>
-                </tr>
-                <?php } ?>
-              </tbody>
-            </table>
-            <?php echo $pagination; ?>
-                 <!-- <table class="table">
-                   <tbody>
-                     <?php foreach ($data as $row): ?>
-                    <h1><?= $row->nama_lowongan;?></h1>
-                    <p><?= $proyekii=$row->no_siup;?></p>
-                    <p><?= $proyekii=$row->tgl_publis;?></p>
-                    <p><?= $proyekii=$row->tgl_berlaku;?></p>
-                    <p><?= $proyekii=$row->pendidikan;?></p>
-                    <p><?= $proyekii=$row->kriteria;?></p>
-                    <p><?= $proyekii=$row->deskripsi?></p>
-                    <p><?= $proyekii=$row->status;?></p>
-                    <a href="<?= base_url();?>">http://localhost/disnaker/Cperusahaan/depan<?=$row->nama_lowongan;?> read more</a>
-                  <?php endforeach;?>
-                   </tbody>
-                 </table> -->
-
-              </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <section class="panel">
+              <table id="table_id" class="display">
+                      <thead>
+                          <tr>
+                            <th>No Siup</th>
+                            <th>Nama Lowongan</th>
+                            <th>Tanggal Publis</th>
+                            <th>Tanggal Penutupan</th>
+                            <th>Nama Perusahaan</th>
+                            <th>Posisi</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                        <?php foreach ($lowong as $key): ?>
+                          <tr>
+                            <td><?=$key->no_siup?></td>
+                            <td><?=$key->nama_lowongan?></td>
+                            <td><?=$key->tanggal_pendaftaran?></td>
+                            <td><?=$key->batas_waktu?></td>
+                            <td><?=$key->nama_perusahaan?></td>
+                            <td><?=$key->jabatan?></td>
+                            <td><?=$key->status?></td>
+                            <td><a class="btn btn-primary" href="<?php echo base_url ('Chome/melamarHome/'.$key->id_lowongan); ?>">Lihat Lowongan</a></td>
+                          </tr>
+                        <?php endforeach; ?>
+                          <!-- <tr>
+                              <td>Row 2 Data 1</td>
+                              <td>Row 2 Data 2</td>
+                          </tr> -->
+                      </tbody>
+                  </table>
+            </section>
+          </div>
         </div>
       <div class="text-right">
         <div class="credits">
@@ -230,7 +236,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <script type="text/javascript" src="<?php echo base_url().'assets/js/jquery.js'?>"></script>
     <script type="text/javascript" src="<?php echo base_url().'assets/js/bootstrap.js'?>"></script>
     <script type="text/javascript" src="<?php echo base_url().'assets/js/jquery.dataTables.js'?>"></script>
-
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js "></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js "></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js "></script>
+    <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js "></script>
+    <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js "></script>
+    <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js "></script>
+    <!-- <script type="text/javascript">
+    $(document).ready( function () {
+      $('#table_id').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'excel'
+        ]
+      });
+    } );
+    </script> -->
+    <script type="text/javascript">
+    $(document).ready( function () {
+      $('#table_id').DataTable();
+    } );
+    </script>
 
 </body>
 
